@@ -1,2 +1,3 @@
 rootProject.name = 'ilohas'
 
+include 'domain', 'app', 'adapter'
