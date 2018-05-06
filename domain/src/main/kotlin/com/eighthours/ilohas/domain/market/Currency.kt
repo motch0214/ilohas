@@ -11,6 +11,8 @@ data class Currency(val code: String) {
 
 data class CurrencyPair(val left: Currency, val right: Currency) {
 
+    val code: String = "${left.code}/${right.code}"
+
     companion object {
         fun of(code: String): CurrencyPair {
             val pair = code.split('/')
