@@ -1,3 +1,6 @@
 dependencies {
     compile project(':app')
+
+    // CSV Parser
+    compile group: 'org.apache.commons', name: 'commons-csv', version: '1.5'
 }
