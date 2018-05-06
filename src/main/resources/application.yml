@@ -1,0 +1,9 @@
+
+import:
+  chunkSize: 100
+  market:
+    marketDataName: Official
+    interestRate:
+      fileName: InterestRate.csv
+    fxSpotRate:
+      fileName: FxSpotRate.csv
