@@ -20,12 +20,12 @@
 
     <Loggers>
         <Logger name="org.hibernate.SQL" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
+            <AppenderRef ref="Console" level="info"/>
+            <AppenderRef ref="File" level="debug"/>
         </Logger>
         <Logger name="org.springframework.boot" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
+            <AppenderRef ref="Console" level="info"/>
+            <AppenderRef ref="File" level="debug"/>
         </Logger>
         <Logger name="com.eighthours" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
