@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 h1, h2 {
   font-weight: normal;
 }
