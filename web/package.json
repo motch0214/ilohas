@@ -1,0 +1,24 @@
+{
+  "name": "ilohas-web",
+  "version": "0.0.1",
+  "description": "ilohas web front-end project",
+  "author": "kazumoto",
+  "license": "BSD-3-Clause",
+  "repository": "https://github.com/motch0214/ilohas",
+  "scripts": {
+    "build": "parcel build index.html",
+    "dev": "parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "vue": "^2.5.16",
+    "vue-hot-reload-api": "^2.3.0",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^1.2.1",
+    "babel-preset-env": "^1.6.1",
+    "parcel-bundler": "^1.8.1",
+    "vue-template-compiler": "^2.5.16"
+  }
+}
