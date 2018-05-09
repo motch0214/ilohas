@@ -7,6 +7,8 @@ plugins {
 group 'com.eighthours'
 version '0.0.1-SNAPSHOT'
 
+apply plugin: 'application'
+
 allprojects {
     apply plugin: 'java'
     apply plugin: 'kotlin'
@@ -57,4 +59,21 @@ dependencies {
     // Logging
     runtime group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
     runtime group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.0'
+}
+
+
+task cleanWebResources(type: Delete) {
+    delete = 'src/main/resources/META-INF/resources'
+}
+
+task copyWebResources(type: Sync, dependsOn: cleanWebResources) {
+    from 'web/dist/production'
+    into 'src/main/resources/META-INF/resources'
+}
+
+processResources.dependsOn copyWebResources
+
+run {
+    mainClassName = 'com.eighthours.ilohas.MainKt'
+    classpath += files('web/dist/dev')
 }

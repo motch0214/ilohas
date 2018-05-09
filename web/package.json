@@ -6,8 +6,9 @@
   "license": "BSD-3-Clause",
   "repository": "https://github.com/motch0214/ilohas",
   "scripts": {
-    "build": "parcel build index.html",
-    "dev": "parcel index.html",
+    "clean": "rimraf dist",
+    "build": "npm run clean && parcel build index.html --public-url /ilohas/ --out-dir dist/production",
+    "dev": "npm run clean && parcel watch index.html --public-url /ilohas/ --out-dir dist/dev/META-INF/resources",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -21,6 +22,7 @@
     "node-sass": "^4.9.0",
     "parcel-bundler": "^1.8.1",
     "pug": "^2.0.3",
+    "rimraf": "^2.6.2",
     "vue-template-compiler": "^2.5.16"
   }
 }

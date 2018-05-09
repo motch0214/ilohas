@@ -8,6 +8,17 @@ spring:
     hibernate:
       hbm2ddl.auto: create-drop
 
+  webflux:
+    static-path-pattern: /ilohas/**
+  resources:
+    static-locations: classpath:/META-INF/resources/
+
+  # for debugging
+  cache.type: NONE
+
+  # TODO temporary
+  security.user.password: pass
+
 
 ilohas:
   import:

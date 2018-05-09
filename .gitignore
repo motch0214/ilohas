@@ -27,5 +27,6 @@ out
 !gradle-wrapper.jar
 
 
-### temporary
+### others
+src/main/resources/META-INF/resources
 db
