@@ -1,18 +1,21 @@
 <template lang="pug">
+doctype html
 .login
   el-card.login-card
     .login-header(slot="header")
       .header-title ilohas
-    el-form
+    el-form(@submit.native.prevent)
       el-form-item(size="medium")
-        el-input(v-model="username" placeholder="User name")
+        el-input(v-model="username" placeholder="User name" autofocus)
       el-form-item(size="medium")
         el-input(v-model="password" type="password" placeholder="Password")
       el-form-item
-        el-button.login-button(type="primary" @click="login") Login
+        el-button.login-button(type="primary" native-type="submit" @click="login") Login
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Login',
   data() {
@@ -23,7 +26,16 @@ export default {
   },
   methods: {
     login() {
-      console.log('login!');
+      axios.post('/ilohas-api/login', {
+        username: this.username,
+        password: this.password,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     },
   },
 };

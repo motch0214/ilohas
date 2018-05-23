@@ -6,13 +6,34 @@ import HelloWorld from '../views/HelloWorld';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
-      path: '/login', name: 'Login', component: Login,
+      path: '/', redirect: { name: 'HelloWorld' },
     },
     {
-      path: '/', name: 'HelloWorld', component: HelloWorld,
+      path: '/login', name: 'Login', component: Login,
+      meta: { permitted: true },
+    },
+    {
+      path: '/hello', name: 'HelloWorld', component: HelloWorld,
     },
   ],
 });
+
+function authenticated() {
+  return false; // TODO
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.every(r => r.meta.permitted) || authenticated()) {
+    next();
+  } else {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    });
+  }
+});
+
+export default router;
