@@ -15,6 +15,7 @@ doctype html
 
 <script>
 import axios from 'axios';
+import param from 'jquery-param';
 
 export default {
   name: 'Login',
@@ -26,10 +27,10 @@ export default {
   },
   methods: {
     login() {
-      axios.post('/ilohas-api/login', {
+      axios.post('/ilohas-api/login', param({
         username: this.username,
         password: this.password,
-      })
+      }))
       .then((res) => {
         console.log(res);
       })
