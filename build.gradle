@@ -82,7 +82,7 @@ run {
 }
 
 // Run with re-creating database
-task runWithDataRefresh(type: JavaExec, dependsOn: 'classes') {
+task runWithDataRefresh(type: JavaExec, dependsOn: classes) {
     classpath += sourceSets.main.runtimeClasspath
     classpath += files('web/dist/dev', 'config/local')
     main = mainClassName
@@ -96,7 +96,11 @@ configure(runWithDataRefresh) {
 }
 
 // Run to generate DDLs
-task generateDdls(type: JavaExec, dependsOn: 'classes') {
+task cleanDdls(type: Delete) {
+    delete = 'temp/ddl'
+}
+
+task generateDdls(type: JavaExec, dependsOn: [classes, cleanDdls]) {
     classpath += sourceSets.main.runtimeClasspath
     classpath += files('config/local')
     main = mainClassName

@@ -32,6 +32,8 @@ fun main(vararg args: String) {
 
     val context = app.run(*cmd.args)
 
+    // TODO flyway
+
     if (cmd.hasOption("t")) {
         val taskName = cmd.getOptionValue("t")
         val task = context.getBean(taskName) as? BatchTask
