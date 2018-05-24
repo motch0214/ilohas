@@ -1,0 +1,16 @@
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:./db/test
+    username:
+    password:
+  jpa.properties:
+    hibernate:
+      hbm2ddl.auto: create
+
+  # for debugging
+  cache.type: NONE
+
+  # TODO temporary
+  security.user.password: pass

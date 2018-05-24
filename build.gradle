@@ -78,12 +78,13 @@ mainClassName = 'com.eighthours.ilohas.MainKt'
 
 // Run local for development
 run {
-    classpath += files('web/dist/dev')
+    classpath += files('web/dist/dev', 'config/local')
 }
 
 // Run to generate DDLs
 task generateDdls(type: JavaExec, dependsOn: 'classes') {
-    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.runtimeClasspath
+    classpath += files('config/local')
     main = mainClassName
     args = ['--batch', '--spring.profiles.active=data']
 }
