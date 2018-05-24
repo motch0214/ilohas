@@ -7,7 +7,7 @@ spring:
     password:
   jpa.properties:
     hibernate:
-      hbm2ddl.auto: validate
+      hbm2ddl.auto: create-drop
 
   # for debugging
   cache.type: NONE

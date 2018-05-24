@@ -76,9 +76,23 @@ processResources.dependsOn copyWebResources
 
 mainClassName = 'com.eighthours.ilohas.MainKt'
 
-// Run local for development
 run {
     classpath += files('web/dist/dev', 'config/local')
+    args = ['--profile=local']
+}
+
+// Run with re-creating database
+task runWithDataRefresh(type: JavaExec, dependsOn: 'classes') {
+    classpath += sourceSets.main.runtimeClasspath
+    classpath += files('web/dist/dev', 'config/local')
+    main = mainClassName
+    args = ['--profile=refreshdata',
+            '--task=InitialDataSetupTask', './data/common', './data/local']
+}
+
+configure(runWithDataRefresh) {
+    group = 'application'
+    description = 'Run application with database refresh'
 }
 
 // Run to generate DDLs
@@ -86,7 +100,7 @@ task generateDdls(type: JavaExec, dependsOn: 'classes') {
     classpath += sourceSets.main.runtimeClasspath
     classpath += files('config/local')
     main = mainClassName
-    args = ['--batch', '--spring.profiles.active=data']
+    args = ['--batch', '--profile=ddl']
 }
 
 configure(generateDdls) {
