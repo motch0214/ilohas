@@ -61,7 +61,7 @@ dependencies {
     runtime group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.0'
 }
 
-
+// Handle front-end resources under the `web` directory
 task cleanWebResources(type: Delete) {
     delete = 'src/main/resources/META-INF/resources'
 }
@@ -73,7 +73,22 @@ task copyWebResources(type: Sync, dependsOn: cleanWebResources) {
 
 processResources.dependsOn copyWebResources
 
+
+mainClassName = 'com.eighthours.ilohas.MainKt'
+
+// Run local for development
 run {
-    mainClassName = 'com.eighthours.ilohas.MainKt'
     classpath += files('web/dist/dev')
+}
+
+// Run to generate DDLs
+task generateDdls(type: JavaExec, dependsOn: 'classes') {
+    classpath = sourceSets.main.runtimeClasspath
+    main = mainClassName
+    args = ['--batch', '--spring.profiles.active=data']
+}
+
+configure(generateDdls) {
+    group = 'data'
+    description = 'Generate DDLs to create and drop database'
 }

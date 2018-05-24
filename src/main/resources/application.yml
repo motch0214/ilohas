@@ -8,9 +8,9 @@ spring:
     url: jdbc:h2:./db/test
     username:
     password:
-  jpa:
+  jpa.properties:
     hibernate:
-      hbm2ddl.auto: create-drop
+      hbm2ddl.auto: create
 
   webflux:
     static-path-pattern: ${web.resources-path}/**

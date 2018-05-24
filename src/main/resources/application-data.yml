@@ -1,0 +1,10 @@
+
+spring:
+  jpa.properties:
+    hibernate:
+      hbm2ddl.auto: none
+
+    javax.persistence.schema-generation.scripts:
+      action: create-drop
+      create-target: ./db/ddl/create.sql
+      drop-target: ./db/ddl/drop.sql
