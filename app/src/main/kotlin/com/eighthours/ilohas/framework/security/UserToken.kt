@@ -3,11 +3,14 @@ package com.eighthours.ilohas.framework.security
 import com.eighthours.ilohas.domain.system.User
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
+import java.util.UUID
 
 
 class UserToken(val user: User) : Authentication {
 
     private var trusted = true
+
+    val sessionId = UUID.randomUUID().toString()
 
     override fun getName(): String {
         return user.name

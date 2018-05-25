@@ -2,6 +2,7 @@ package com.eighthours.ilohas.config
 
 import com.eighthours.ilohas.framework.security.UserAuthenticationProvider
 import com.eighthours.ilohas.framework.security.UserAuthenticationService
+import com.eighthours.ilohas.framework.security.UserToken
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,8 +11,13 @@ import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.authentication.ReactiveAuthenticationManagerAdapter
 import org.springframework.security.config.web.server.ServerHttpSecurity
+import org.springframework.security.core.Authentication
 import org.springframework.security.web.server.SecurityWebFilterChain
+import org.springframework.security.web.server.WebFilterExchange
+import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler
+import org.springframework.security.web.server.authentication.WebFilterChainServerAuthenticationSuccessHandler
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers
+import reactor.core.publisher.Mono
 import javax.inject.Inject
 
 
@@ -24,8 +30,8 @@ class SecurityConfig {
     @Value("\${web.api-path}")
     private lateinit var apiPath: String
 
-    // `ServerHttpSecurity` will be null when batch-mode
     @Inject
+    // `ServerHttpSecurity` will be null when batch-mode
     private var http: ServerHttpSecurity? = null
 
     @Bean
@@ -39,6 +45,7 @@ class SecurityConfig {
                 .loginPage("$resourcesPath/index.html#/login")
                 .requiresAuthenticationMatcher(
                         ServerWebExchangeMatchers.pathMatchers(HttpMethod.POST, "$apiPath/login"))
+                .authenticationSuccessHandler(WebFilterChainServerAuthenticationSuccessHandler())
 
         http.authenticationManager(manager)
 
