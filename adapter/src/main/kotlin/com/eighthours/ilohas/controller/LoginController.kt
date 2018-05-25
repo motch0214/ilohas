@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
 
 
@@ -16,10 +17,13 @@ class LoginController {
     }
 
     @PostMapping("\${web.api-path}/login")
-    fun login(): Mono<UserTokenMessage> {
+    fun login(exchange: ServerWebExchange): Mono<UserTokenMessage> {
         val token = SecurityContextHolder.getContext().authentication as? UserToken
                 ?: throw IllegalStateException("Invalid authentication")
-        return Mono.just(UserTokenMessage(token.sessionId, token.user.name))
+
+        return exchange.session.map {
+            UserTokenMessage(it.id, token.user.name)
+        }
     }
 }
 
