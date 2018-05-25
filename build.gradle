@@ -86,7 +86,7 @@ task runWithDataRefresh(type: JavaExec, dependsOn: classes) {
     classpath += sourceSets.main.runtimeClasspath
     classpath += files('web/dist/dev', 'config/local')
     main = mainClassName
-    args = ['--profile=refreshdata',
+    args = ['--profile=local,refreshdata',
             '--task=InitialDataSetupTask', './data/common', './data/local']
 }
 
@@ -104,7 +104,7 @@ task generateDdls(type: JavaExec, dependsOn: [classes, cleanDdls]) {
     classpath += sourceSets.main.runtimeClasspath
     classpath += files('config/local')
     main = mainClassName
-    args = ['--batch', '--profile=ddl']
+    args = ['--batch', '--profile=local,ddl']
 }
 
 configure(generateDdls) {
