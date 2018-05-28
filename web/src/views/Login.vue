@@ -15,7 +15,6 @@ doctype html
 
 <script>
 import axios from 'axios';
-import param from 'jquery-param';
 
 export default {
   name: 'Login',
@@ -27,15 +26,25 @@ export default {
   },
   methods: {
     login() {
-      axios.post('/ilohas-api/login', param({
-        username: this.username,
-        password: this.password,
-      }))
+      const params = new URLSearchParams();
+      params.append('username', this.username);
+      params.append('password', this.password);
+      axios.post('/ilohas-api/login', params, {
+        headers: {
+          'cache-control': 'max-age=0',
+          'upgrade-insecure-requests': 1,
+        }
+      })
       .then((res) => {
-        console.log(res);
+        if ('sessionId' in res.data && 'displayName' in res.data) {
+          localStorage.setItem('user-token', JSON.stringify(res.data));
+          this.$router.push(this.$route.query.redirect || '/');
+        } else {
+          console.error(res.data)
+        }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
     },
   },

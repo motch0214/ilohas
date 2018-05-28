@@ -2,27 +2,38 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Login from '../views/Login';
+import Main from '../views/Main';
 import HelloWorld from '../views/HelloWorld';
+import MarketData from '../views/marketdata/MarketData';
 
 Vue.use(Router);
 
 const router = new Router({
   routes: [
     {
-      path: '/', redirect: { name: 'HelloWorld' },
-    },
-    {
       path: '/login', name: 'Login', component: Login,
       meta: { permitted: true },
     },
     {
-      path: '/hello', name: 'HelloWorld', component: HelloWorld,
+      path: '/', name: 'Main', component: Main,
+      children: [
+        {
+          path: '/', redirect: { name: 'HelloWorld' },
+        },
+        {
+          path: 'hello', name: 'HelloWorld', component: HelloWorld,
+        },
+        {
+          path: 'market', name: 'MarketData', component: MarketData,
+        },
+      ],
     },
   ],
 });
 
 function authenticated() {
-  return false; // TODO
+  const token = JSON.parse(localStorage.getItem('user-token'));
+  return token && 'sessionId' in token;
 }
 
 router.beforeEach((to, from, next) => {
