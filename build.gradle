@@ -7,8 +7,6 @@ plugins {
 group 'com.eighthours'
 version '0.0.1-SNAPSHOT'
 
-apply plugin: 'application'
-
 allprojects {
     apply plugin: 'java'
     apply plugin: 'kotlin'
@@ -61,53 +59,5 @@ dependencies {
     runtime group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.0'
 }
 
-// Handle front-end resources under the `web` directory
-task cleanWebResources(type: Delete) {
-    delete = 'src/main/resources/META-INF/resources'
-}
 
-task copyWebResources(type: Sync, dependsOn: cleanWebResources) {
-    from 'web/dist/production'
-    into 'src/main/resources/META-INF/resources'
-}
-
-processResources.dependsOn copyWebResources
-
-
-mainClassName = 'com.eighthours.ilohas.MainKt'
-
-run {
-    classpath += files('web/dist/dev', 'config/local')
-    args = ['--profile=local']
-}
-
-// Run with re-creating database
-task runWithDataRefresh(type: JavaExec, dependsOn: classes) {
-    classpath += sourceSets.main.runtimeClasspath
-    classpath += files('web/dist/dev', 'config/local')
-    main = mainClassName
-    args = ['--profile=local,refreshdata',
-            '--task=InitialDataSetupTask', './data/common', './data/local']
-}
-
-configure(runWithDataRefresh) {
-    group = 'application'
-    description = 'Run application with database refresh'
-}
-
-// Run to generate DDLs
-task cleanDdls(type: Delete) {
-    delete = 'temp/ddl'
-}
-
-task generateDdls(type: JavaExec, dependsOn: [classes, cleanDdls]) {
-    classpath += sourceSets.main.runtimeClasspath
-    classpath += files('config/local')
-    main = mainClassName
-    args = ['--batch', '--profile=local,ddl']
-}
-
-configure(generateDdls) {
-    group = 'data'
-    description = 'Generate DDLs to create and drop database'
-}
+apply from: 'scripts/run.gradle'
