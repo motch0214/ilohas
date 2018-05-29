@@ -14,22 +14,22 @@
 export default {
   name: 'Main',
   data() {
-    return {
-    };
+    return {};
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.el-header, .el-footer {
-  background-color: #B3C0D1;
+.el-header,
+.el-footer {
+  background-color: #b3c0d1;
   color: #333;
   text-align: center;
   line-height: 60px;
 }
 
 .el-aside {
-  background-color: #D3DCE6;
+  background-color: #d3dce6;
   color: #333;
   text-align: center;
   line-height: 200px;

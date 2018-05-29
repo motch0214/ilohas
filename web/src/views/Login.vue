@@ -29,23 +29,24 @@ export default {
       const params = new URLSearchParams();
       params.append('username', this.username);
       params.append('password', this.password);
-      axios.post('/ilohas-api/login', params, {
-        headers: {
-          'cache-control': 'max-age=0',
-          'upgrade-insecure-requests': 1,
-        }
-      })
-      .then((res) => {
-        if ('sessionId' in res.data && 'displayName' in res.data) {
-          localStorage.setItem('user-token', JSON.stringify(res.data));
-          this.$router.push(this.$route.query.redirect || '/');
-        } else {
-          console.error(res.data)
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+      axios
+        .post('/ilohas-api/login', params, {
+          headers: {
+            'cache-control': 'max-age=0',
+            'upgrade-insecure-requests': 1,
+          },
+        })
+        .then(res => {
+          if ('sessionId' in res.data && 'displayName' in res.data) {
+            localStorage.setItem('user-token', JSON.stringify(res.data));
+            this.$router.push(this.$route.query.redirect || '/');
+          } else {
+            console.error(res.data);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
     },
   },
 };

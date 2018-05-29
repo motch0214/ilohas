@@ -11,20 +11,29 @@ Vue.use(Router);
 const router = new Router({
   routes: [
     {
-      path: '/login', name: 'Login', component: Login,
+      path: '/login',
+      name: 'Login',
+      component: Login,
       meta: { permitted: true },
     },
     {
-      path: '/', name: 'Main', component: Main,
+      path: '/',
+      name: 'Main',
+      component: Main,
       children: [
         {
-          path: '/', redirect: { name: 'HelloWorld' },
+          path: '/',
+          redirect: { name: 'HelloWorld' },
         },
         {
-          path: 'hello', name: 'HelloWorld', component: HelloWorld,
+          path: 'hello',
+          name: 'HelloWorld',
+          component: HelloWorld,
         },
         {
-          path: 'market', name: 'MarketData', component: MarketData,
+          path: 'market',
+          name: 'MarketData',
+          component: MarketData,
         },
       ],
     },
@@ -42,7 +51,7 @@ router.beforeEach((to, from, next) => {
   } else {
     next({
       path: '/login',
-      query: { redirect: to.fullPath }
+      query: { redirect: to.fullPath },
     });
   }
 });

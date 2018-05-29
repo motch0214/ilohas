@@ -34,7 +34,8 @@ export default {
   text-align: center;
   margin-top: 60px;
 }
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {

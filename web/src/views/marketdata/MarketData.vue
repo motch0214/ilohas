@@ -4,13 +4,10 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   name: 'MarketData',
   data() {
-    return {
-    };
+    return {};
   },
 };
 </script>
