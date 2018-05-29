@@ -13,9 +13,11 @@ import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.security.web.server.authentication.WebFilterChainServerAuthenticationSuccessHandler
+import org.springframework.security.web.server.authentication.logout.RedirectServerLogoutSuccessHandler
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers
 import org.springframework.web.server.session.DefaultWebSessionManager
 import org.springframework.web.server.session.WebSessionManager
+import java.net.URI
 import javax.inject.Inject
 
 
@@ -35,6 +37,7 @@ class SecurityConfig {
     @Bean
     fun springSecurityFilterChain(manager: ReactiveAuthenticationManager): SecurityWebFilterChain? {
         val http = http ?: return null
+
         http.authorizeExchange()
                 .pathMatchers("$resourcesPath/**").permitAll()
                 .anyExchange().authenticated()
@@ -44,6 +47,12 @@ class SecurityConfig {
                 .requiresAuthenticationMatcher(
                         ServerWebExchangeMatchers.pathMatchers(HttpMethod.POST, "$apiPath/login"))
                 .authenticationSuccessHandler(WebFilterChainServerAuthenticationSuccessHandler())
+
+        http.logout()
+                .logoutUrl("$apiPath/logout")
+                .logoutSuccessHandler(RedirectServerLogoutSuccessHandler().apply {
+                    setLogoutSuccessUrl(URI.create("$resourcesPath/index.html#/login?logout"))
+                })
 
         http.authenticationManager(manager)
 
