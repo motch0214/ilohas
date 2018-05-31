@@ -1,6 +1,5 @@
 apply plugin: 'application'
 
-
 // Handle front-end resources under the `web` directory
 task cleanWebResources(type: Delete) {
     delete = 'src/main/resources/META-INF/resources'
@@ -21,21 +20,22 @@ run {
     args = ['--profile=local']
 }
 
-// Run with re-creating database
-task runWithDataRefresh(type: JavaExec, dependsOn: classes) {
+// Refresh database
+task refreshDb(type: JavaExec, dependsOn: classes) {
     classpath += sourceSets.main.runtimeClasspath
-    classpath += files('web/dist/dev', 'config/local')
+    classpath += files('config/local')
     main = mainClassName
-    args = ['--profile=local,refreshdata',
+    args = ['--batch',
+            '--profile=local,refreshdata',
             '--task=InitialDataSetupTask', './data/init/common', './data/init/local']
 }
 
-configure(runWithDataRefresh) {
+configure(refreshDb) {
     group = 'application'
-    description = 'Run application with database refresh'
+    description = 'Recreate database and setup initial data'
 }
 
-// Run to generate DDLs
+// Generate DDLs
 task cleanDdls(type: Delete) {
     delete = 'temp/ddl'
 }

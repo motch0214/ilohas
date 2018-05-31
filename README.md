@@ -8,5 +8,6 @@ $ cd ilohas/web
 $ npm install
 $ npm run build
 $ cd ..
+$ ./gradlew refreshDb
 $ ./gradlew run
 ```
