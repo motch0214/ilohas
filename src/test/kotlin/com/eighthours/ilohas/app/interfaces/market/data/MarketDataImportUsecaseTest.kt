@@ -20,7 +20,7 @@ class MarketDataImportUsecaseTest {
     private lateinit var usecase: MarketDataImportUsecase
 
     protected fun testDataDirectory(): Path {
-        return FileSystems.getDefault().getPath("src/test/data", this::class.java.simpleName)
+        return FileSystems.getDefault().getPath("data/test/ut", this::class.java.simpleName)
     }
 
     @Test

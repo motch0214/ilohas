@@ -27,7 +27,7 @@ task runWithDataRefresh(type: JavaExec, dependsOn: classes) {
     classpath += files('web/dist/dev', 'config/local')
     main = mainClassName
     args = ['--profile=local,refreshdata',
-            '--task=InitialDataSetupTask', './data/common', './data/local']
+            '--task=InitialDataSetupTask', './data/init/common', './data/init/local']
 }
 
 configure(runWithDataRefresh) {
