@@ -1,0 +1,11 @@
+task interfaceMarketData(type: JavaExec, dependsOn: classes) {
+    classpath += sourceSets.main.runtimeClasspath
+    classpath += files('config/local')
+    main = mainClassName
+    args = ['--batch', '--profile=local',
+            '--task=MarketDataInterfaceTask', '20180401', './data/test/ut/MarketDataImportUsecaseTest']
+}
+
+configure(interfaceMarketData) {
+    group = 'batch'
+}
