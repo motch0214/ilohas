@@ -1,7 +1,11 @@
 package com.eighthours.ilohas.app.setup
 
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVParser
+import org.apache.commons.csv.CSVRecord
 import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Service
+import java.nio.file.Files
 import java.nio.file.Path
 import javax.inject.Inject
 
@@ -32,9 +36,18 @@ class InitialDataSetupService {
 }
 
 
+private val DEFAULT_CSV_FORMAT = CSVFormat.DEFAULT.withFirstRecordAsHeader()
+
 interface DataSetup {
 
     val filename: String
 
     fun setup(file: Path)
+
+    fun readCsv(file: Path, block: (Sequence<CSVRecord>) -> Unit) {
+        Files.newBufferedReader(file).use {
+            val seq = CSVParser.parse(it, DEFAULT_CSV_FORMAT).asSequence()
+            block(seq)
+        }
+    }
 }
