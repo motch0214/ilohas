@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 
 // Ordered `DataSetup`
-private val setupClasses = listOf<Class<out DataSetup>>(
-        UserSetup::class.java
+private val setupClasses = listOf(
+        UserSetup::class
 )
 
 
@@ -24,7 +24,7 @@ class InitialDataSetupService {
 
     fun setup(directories: List<Path>) {
         for (setupClass in setupClasses) {
-            val instance = context.getBean(setupClass)
+            val instance = context.getBean(setupClass.java)
             for (directory in directories) {
                 val file = directory.resolve(instance.filename).toFile()
                 if (file.exists() && file.isFile) {
