@@ -2,8 +2,13 @@ dependencies {
     compile project(':domain')
 
     // Spring
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.0.1.RELEASE') {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.0.1.RELEASE') {
         exclude module: 'spring-boot-starter-logging'
     }
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.0.4.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.0.4.RELEASE'
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.0.6.RELEASE'
+
+    // Jackson for Kotlin
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.5'
 }

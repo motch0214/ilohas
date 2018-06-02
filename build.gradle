@@ -45,11 +45,14 @@ dependencies {
     testCompile group: 'org.springframework', name: 'spring-test', version: '5.0.5.RELEASE'
 
     // Hibernate
-    runtime group: 'org.hibernate', name: 'hibernate-core', version: '5.2.15.Final'
-    runtime group: 'org.hibernate', name: 'hibernate-hikaricp', version: '5.2.15.Final'
+    runtime group: 'org.hibernate', name: 'hibernate-core', version: '5.2.16.Final'
+    runtime group: 'org.hibernate', name: 'hibernate-hikaricp', version: '5.2.16.Final'
+
+    // Data Source
+    runtime group: 'com.zaxxer', name: 'HikariCP', version: '3.1.0'
 
     // Database
-    testRuntime group: 'com.h2database', name: 'h2', version: '1.4.197'
+    runtime group: 'com.h2database', name: 'h2', version: '1.4.197' // TODO testRuntime
 
     // Logging
     runtime group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
