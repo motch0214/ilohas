@@ -1,8 +1,8 @@
 package com.eighthours.ilohas.adapter.`interface`.reader.market.data.rates
 
-import com.eighthours.ilohas.adapter.util.CsvReader
 import com.eighthours.ilohas.app.`interface`.InterfaceReader
 import com.eighthours.ilohas.app.`interface`.market.data.rates.InterestRateDto
+import com.eighthours.ilohas.framework.reader.CsvReader
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVRecord
 import org.springframework.stereotype.Component

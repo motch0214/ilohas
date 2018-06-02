@@ -11,4 +11,7 @@ dependencies {
 
     // Jackson for Kotlin
     compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.5'
+
+    // CSV Parser
+    compile group: 'org.apache.commons', name: 'commons-csv', version: '1.5'
 }

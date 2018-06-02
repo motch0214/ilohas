@@ -3,7 +3,4 @@ dependencies {
 
     // Command parser
     compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
-
-    // CSV Parser
-    compile group: 'org.apache.commons', name: 'commons-csv', version: '1.5'
 }

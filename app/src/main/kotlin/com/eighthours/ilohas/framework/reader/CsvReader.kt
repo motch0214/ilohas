@@ -1,4 +1,4 @@
-package com.eighthours.ilohas.adapter.util
+package com.eighthours.ilohas.framework.reader
 
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
