@@ -15,7 +15,7 @@ import javax.inject.Inject
 @Transactional
 class MarketDataImportUsecase {
 
-    @Value("\${import.market.marketDataName}")
+    @Value("\${ilohas.import.market.marketDataName}")
     private lateinit var marketDataName: String
 
     @Inject

@@ -14,10 +14,10 @@ import javax.inject.Inject
 @Component
 class InterestRateImporterFactory {
 
-    @Value("\${import.market.interestRate.fileName}")
+    @Value("\${ilohas.import.market.interestRate.fileName}")
     private lateinit var fileName: String
 
-    @Value("\${import.chunkSize}")
+    @Value("\${ilohas.import.chunkSize}")
     private val chunkSize: Int = 100
 
     @Inject
