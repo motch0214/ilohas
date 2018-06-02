@@ -1,7 +1,7 @@
-package com.eighthours.ilohas.adapter.`interface`.reader.market.data.rates
+package com.eighthours.ilohas.adapter.interfaces.reader.market.data.rates
 
-import com.eighthours.ilohas.app.`interface`.InterfaceReader
-import com.eighthours.ilohas.app.`interface`.market.data.rates.InterestRateDto
+import com.eighthours.ilohas.app.interfaces.InterfaceReader
+import com.eighthours.ilohas.app.interfaces.market.data.rates.InterestRateDto
 import com.eighthours.ilohas.framework.reader.CsvReader
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVRecord

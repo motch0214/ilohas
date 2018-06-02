@@ -1,6 +1,6 @@
 package com.eighthours.ilohas.adapter.jpa.market.data.rates
 
-import com.eighthours.ilohas.app.`interface`.market.data.rates.InterestRateDao
+import com.eighthours.ilohas.app.interfaces.market.data.rates.InterestRateDao
 import com.eighthours.ilohas.domain.market.data.rates.InterestRate
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component

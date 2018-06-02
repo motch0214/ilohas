@@ -1,4 +1,4 @@
-package com.eighthours.ilohas.app.`interface`.market.data
+package com.eighthours.ilohas.app.interfaces.market.data
 
 import org.junit.Test
 import org.junit.runner.RunWith

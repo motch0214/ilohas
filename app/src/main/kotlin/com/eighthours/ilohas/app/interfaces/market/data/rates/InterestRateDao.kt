@@ -1,4 +1,4 @@
-package com.eighthours.ilohas.app.`interface`.market.data.rates
+package com.eighthours.ilohas.app.interfaces.market.data.rates
 
 import com.eighthours.ilohas.domain.market.data.rates.InterestRate
 

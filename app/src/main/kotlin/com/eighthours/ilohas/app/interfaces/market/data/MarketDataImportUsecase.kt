@@ -1,6 +1,6 @@
-package com.eighthours.ilohas.app.`interface`.market.data
+package com.eighthours.ilohas.app.interfaces.market.data
 
-import com.eighthours.ilohas.app.`interface`.market.data.rates.InterestRateImporterFactory
+import com.eighthours.ilohas.app.interfaces.market.data.rates.InterestRateImporterFactory
 import com.eighthours.ilohas.domain.market.data.MarketData
 import com.eighthours.ilohas.domain.market.data.MarketDataRepository
 import org.springframework.beans.factory.annotation.Value

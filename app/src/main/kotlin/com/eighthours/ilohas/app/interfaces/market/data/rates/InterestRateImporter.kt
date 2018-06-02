@@ -1,6 +1,6 @@
-package com.eighthours.ilohas.app.`interface`.market.data.rates
+package com.eighthours.ilohas.app.interfaces.market.data.rates
 
-import com.eighthours.ilohas.app.`interface`.InterfaceReader
+import com.eighthours.ilohas.app.interfaces.InterfaceReader
 import com.eighthours.ilohas.domain.market.Currency
 import com.eighthours.ilohas.domain.market.Term
 import com.eighthours.ilohas.domain.market.data.MarketDataId

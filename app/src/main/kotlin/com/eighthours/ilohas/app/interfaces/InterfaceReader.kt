@@ -1,4 +1,4 @@
-package com.eighthours.ilohas.app.`interface`;
+package com.eighthours.ilohas.app.interfaces;
 
 import java.nio.file.Path
 
