@@ -1,6 +1,6 @@
 <template lang="pug">
 doctype html
-.login
+#login
   el-card.login-card
     .login-header(slot="header")
       .header-title ilohas

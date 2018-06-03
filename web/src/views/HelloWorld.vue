@@ -1,5 +1,5 @@
 <template lang="pug">
-.hello
+#hello
   img(src="../assets/logo.png")
   h1 {{ msg }}
   h2 Essential Links
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.hello {
+#hello {
   text-align: center;
   margin-top: 60px;
 }

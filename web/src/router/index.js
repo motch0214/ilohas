@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Login from '../views/Login';
-import Main from '../views/Main';
+import Layout from '../views/Layout';
 import HelloWorld from '../views/HelloWorld';
 import MarketData from '../views/marketdata/MarketData';
 
@@ -18,11 +18,11 @@ const router = new Router({
     },
     {
       path: '/',
-      name: 'Main',
-      component: Main,
+      component: Layout,
       children: [
         {
           path: '/',
+          name: 'Main',
           redirect: { name: 'HelloWorld' },
         },
         {

@@ -1,5 +1,5 @@
 <template lang="pug">
-.app
+#app
   router-view
 </template>
 
@@ -12,7 +12,13 @@ export default {
 <style lang="scss">
 @import './styles/colors';
 
-.app {
+html,
+body,
+#app {
+  height: 100%;
+}
+
+#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

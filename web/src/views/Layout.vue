@@ -1,0 +1,55 @@
+<template lang="pug">
+#layout
+  el-container
+    el-header(height="auto")
+      h1 ilohas
+    el-container
+      el-aside(width="200px")
+        menu-list
+      el-container
+        el-main
+          router-view
+        el-footer(height="auto")
+          .copyright Copyright © 2018 eighthours All Rights Reserved.
+</template>
+
+<script>
+import Menu from './Menu';
+
+export default {
+  name: 'Layout',
+  components: {
+    'menu-list': Menu,
+  },
+  data() {
+    return {};
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+#layout,
+section {
+  height: 100%;
+}
+
+.el-header {
+  padding: 10px 20px;
+  color: white;
+  background-color: #261044fd;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.el-main {
+  padding: 0;
+}
+
+.copyright {
+  text-align: right;
+  font-size: 0.75em;
+  margin: 5px 0;
+}
+</style>
