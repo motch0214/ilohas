@@ -1,7 +1,9 @@
-package com.eighthours.ilohas.framework.reader
+package com.eighthours.ilohas.framework.validation
 
 
-abstract class Violation(val type: ViolationType, val header: String)
+interface Violation {
+    val type: ViolationType
+}
 
 
 enum class ViolationType {

@@ -2,6 +2,7 @@ package com.eighthours.ilohas.app.interfaces.converter
 
 import com.eighthours.ilohas.domain.market.Currency
 import com.eighthours.ilohas.framework.reader.*
+import com.eighthours.ilohas.framework.validation.Violation
 import kotlin.reflect.KMutableProperty1
 
 

@@ -1,6 +1,6 @@
 package com.eighthours.ilohas.app.interfaces
 
-import com.eighthours.ilohas.framework.reader.ValidationResults
+import com.eighthours.ilohas.framework.validation.ValidationResults
 import java.nio.file.Path
 
 

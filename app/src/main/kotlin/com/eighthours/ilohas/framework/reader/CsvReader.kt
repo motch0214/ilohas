@@ -1,5 +1,6 @@
 package com.eighthours.ilohas.framework.reader
 
+import com.eighthours.ilohas.framework.validation.ValidationResults
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import org.apache.commons.csv.CSVRecord

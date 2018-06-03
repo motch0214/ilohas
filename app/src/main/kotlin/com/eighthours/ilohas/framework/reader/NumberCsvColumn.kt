@@ -1,5 +1,6 @@
 package com.eighthours.ilohas.framework.reader
 
+import com.eighthours.ilohas.framework.validation.Violation
 import kotlin.reflect.KMutableProperty1
 
 
