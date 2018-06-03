@@ -15,18 +15,20 @@ abstract class CsvReader<T> {
 
     protected abstract fun createObj(): T
 
-    fun read(file: Path, block: (Sequence<T>) -> Unit) {
+    fun read(file: Path, block: (Sequence<Pair<T, ValidationResults>>) -> Unit) {
         return Files.newBufferedReader(file).use {
             val seq = CSVParser(it, format).asSequence().map(::convert)
             block(seq)
         }
     }
 
-    private fun convert(record: CSVRecord): T {
+    private fun convert(record: CSVRecord): Pair<T, ValidationResults> {
+        val results = ValidationResults()
         val obj = createObj()
         for (col in columns.columns) {
-            col.property?.set(obj, record[col.header])
+            val violation = col.set(obj, record[col.header])
+            violation?.let { results.add(it) }
         }
-        return obj
+        return obj to results
     }
 }

@@ -1,13 +1,16 @@
 package com.eighthours.ilohas.app.interfaces.market.data.rates.csv
 
+import com.eighthours.ilohas.domain.market.Currency
+import com.eighthours.ilohas.domain.market.Term
 
-data class InterestRateCsvObject(
 
-        var currency: String? = null,
+class InterestRateCsvObject {
 
-        var indexName: String? = null,
+    lateinit var currency: Currency
 
-        var term: String? = null,
+    lateinit var indexName: String
 
-        var rate: String? = null
-)
+    lateinit var term: Term
+
+    var rate: Double = 0.0
+}

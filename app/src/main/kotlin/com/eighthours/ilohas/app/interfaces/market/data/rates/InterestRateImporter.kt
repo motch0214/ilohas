@@ -2,10 +2,9 @@ package com.eighthours.ilohas.app.interfaces.market.data.rates
 
 import com.eighthours.ilohas.app.interfaces.InterfaceReader
 import com.eighthours.ilohas.app.interfaces.market.data.rates.csv.InterestRateCsvObject
-import com.eighthours.ilohas.domain.market.Currency
-import com.eighthours.ilohas.domain.market.Term
 import com.eighthours.ilohas.domain.market.data.MarketDataId
 import com.eighthours.ilohas.domain.market.data.rates.InterestRate
+import com.eighthours.ilohas.framework.reader.ValidationResults
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.nio.file.Path
@@ -33,19 +32,29 @@ class InterestRateImporterFactory {
             private val marketDataId: MarketDataId,
             private val targetDirectory: Path) {
 
+        private val validationResults = ValidationResults()
+
         fun import() {
             reader.read(targetDirectory.resolve(fileName)) { rates ->
-                rates.map(::convert).chunked(chunkSize).forEach { dao.saveAll(it) }
+                rates.filter { (_, results) -> resolve(results) }
+                        .map { (rate, _) -> convert(rate) }
+                        .chunked(chunkSize)
+                        .forEach { dao.saveAll(it) }
             }
+        }
+
+        private fun resolve(results: ValidationResults): Boolean {
+            validationResults.merge(results)
+            return !results.hasError
         }
 
         private fun convert(obj: InterestRateCsvObject): InterestRate {
             return InterestRate(
                     marketDataId = marketDataId,
-                    indexName = obj.indexName!!,
-                    currency = Currency.of(obj.currency!!),
-                    term = Term.of(obj.term!!),
-                    rate = obj.rate?.toDouble()!!)
+                    indexName = obj.indexName,
+                    currency = obj.currency,
+                    term = obj.term,
+                    rate = obj.rate)
         }
     }
 }
