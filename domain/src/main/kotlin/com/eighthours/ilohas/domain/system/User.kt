@@ -11,7 +11,8 @@ typealias UserId = Long
 @Entity
 class User(
         @Column(nullable = false, unique = true)
-        val name: String) {
+        val name: String
+) {
 
     @Id
     @GeneratedValue

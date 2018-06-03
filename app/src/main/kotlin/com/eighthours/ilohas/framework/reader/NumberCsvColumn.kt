@@ -1,15 +1,16 @@
 package com.eighthours.ilohas.framework.reader
 
 import com.eighthours.ilohas.framework.validation.Violation
+import org.apache.commons.csv.CSVRecord
 import kotlin.reflect.KMutableProperty1
 
 
 class DoubleColumn<T>(header: String, property: KMutableProperty1<T, in Double>, isMandatory: Boolean)
     : AbstractCsvColumn<T, Double>(header, property, isMandatory) {
 
-    override fun convert(string: String): Which<Double, Violation> {
+    override fun convert(string: String, record: CSVRecord): Which<Double, Violation> {
         val number = string.toDoubleOrNull()
-                ?: return Which.right(FormatViolation(header, string))
+                ?: return Which.right(FormatViolation(header, record.recordNumber, string))
         return Which.left(number)
     }
 }

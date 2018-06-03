@@ -3,17 +3,18 @@ package com.eighthours.ilohas.app.interfaces.converter
 import com.eighthours.ilohas.domain.market.Term
 import com.eighthours.ilohas.framework.reader.*
 import com.eighthours.ilohas.framework.validation.Violation
+import org.apache.commons.csv.CSVRecord
 import kotlin.reflect.KMutableProperty1
 
 
 class TermColumn<T>(header: String, property: KMutableProperty1<T, in Term>, isMandatory: Boolean)
     : AbstractCsvColumn<T, Term>(header, property, isMandatory) {
 
-    override fun convert(string: String): Which<Term, Violation> {
+    override fun convert(string: String, record: CSVRecord): Which<Term, Violation> {
         return try {
             Which.left(Term.of(string))
         } catch (e: IllegalArgumentException) {
-            Which.right(FormatViolation(header, string))
+            Which.right(FormatViolation(header, record.recordNumber, string))
         }
     }
 }

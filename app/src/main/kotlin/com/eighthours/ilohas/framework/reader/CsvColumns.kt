@@ -1,12 +1,13 @@
 package com.eighthours.ilohas.framework.reader
 
 import com.eighthours.ilohas.framework.validation.Violation
+import org.apache.commons.csv.CSVRecord
 import kotlin.reflect.KMutableProperty1
 
 
 interface CsvColumn<T> {
     val header: String
-    fun set(receiver: T, value: String?): Violation?
+    fun set(receiver: T, record: CSVRecord): Violation?
 }
 
 
@@ -21,11 +22,12 @@ abstract class CsvColumns<T> {
 abstract class AbstractCsvColumn<T, V : Any>(override val header: String, private val property: KMutableProperty1<T, in V>,
                                              private val isMandatory: Boolean) : CsvColumn<T> {
 
-    override fun set(receiver: T, value: String?): Violation? {
-        if (value == null || value.isBlank())
-            return if (isMandatory) MandatoryViolation(header) else null
+    override fun set(receiver: T, record: CSVRecord): Violation? {
+        val string = record[header]
+        if (string == null || string.isBlank())
+            return if (isMandatory) MandatoryViolation(header, record.recordNumber) else null
 
-        val (converted, violation) = convert(value)
+        val (converted, violation) = convert(string, record)
 
         if (violation != null) return violation
 
@@ -33,20 +35,20 @@ abstract class AbstractCsvColumn<T, V : Any>(override val header: String, privat
         return null
     }
 
-    abstract fun convert(string: String): Which<V, Violation>
+    abstract fun convert(string: String, record: CSVRecord): Which<V, Violation>
 }
 
 
 class StringColumn<T>(header: String, property: KMutableProperty1<T, in String>, isMandatory: Boolean)
     : AbstractCsvColumn<T, String>(header, property, isMandatory) {
 
-    override fun convert(string: String): Which<String, Violation> = Which.left(string)
+    override fun convert(string: String, record: CSVRecord): Which<String, Violation> = Which.left(string)
 }
 
 
 private class IgnoredColumn<T>(override val header: String) : CsvColumn<T> {
 
-    override fun set(receiver: T, value: String?): Nothing? = null
+    override fun set(receiver: T, record: CSVRecord): Nothing? = null
 }
 
 

@@ -3,13 +3,14 @@ package com.eighthours.ilohas.app.interfaces.converter
 import com.eighthours.ilohas.domain.market.Currency
 import com.eighthours.ilohas.framework.reader.*
 import com.eighthours.ilohas.framework.validation.Violation
+import org.apache.commons.csv.CSVRecord
 import kotlin.reflect.KMutableProperty1
 
 
 class CurrencyColumn<T>(header: String, property: KMutableProperty1<T, in Currency>, isMandatory: Boolean)
     : AbstractCsvColumn<T, Currency>(header, property, isMandatory) {
 
-    override fun convert(string: String): Which<Currency, Violation> {
+    override fun convert(string: String, record: CSVRecord): Which<Currency, Violation> {
         return Which.left(Currency.of(string))
     }
 }

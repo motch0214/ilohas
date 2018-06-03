@@ -27,7 +27,7 @@ abstract class CsvReader<T> {
         val results = ValidationResults()
         val obj = createObj()
         for (col in columns.columns) {
-            val violation = col.set(obj, record[col.header])
+            val violation = col.set(obj, record)
             violation?.let { results.add(it) }
         }
         return obj to results

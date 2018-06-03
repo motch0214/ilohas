@@ -2,6 +2,7 @@ package com.eighthours.ilohas.app.interfaces.market.data.rates
 
 import com.eighthours.ilohas.app.interfaces.DuplicationViolation
 import com.eighthours.ilohas.app.interfaces.InterfaceReader
+import com.eighthours.ilohas.app.interfaces.RecordViolation
 import com.eighthours.ilohas.app.interfaces.market.data.rates.csv.InterestRateCsvObject
 import com.eighthours.ilohas.domain.market.data.MarketDataId
 import com.eighthours.ilohas.domain.market.data.rates.InterestRate
@@ -32,41 +33,45 @@ class InterestRateImporterFactory {
 
     inner class InterestRateImporter(
             private val marketDataId: MarketDataId,
-            private val targetDirectory: Path) {
+            targetDirectory: Path) {
 
-        private val validationResults = ValidationResults()
+        val targetFile = targetDirectory.resolve(fileName)
+
+        val validationResults = ValidationResults()
 
         private val importedBusinessKeys = mutableSetOf<MultiKey<*>>()
 
         fun import() {
-            reader.read(targetDirectory.resolve(fileName)) { rates ->
+            reader.read(targetFile) { rates ->
                 rates.filter { (_, results) -> resolve(results) }
-                        .map { (rate, _) -> convert(rate) }
-                        .filter {
-                            val key = it.businessKey()
-                            val added = importedBusinessKeys.add(key)
-                            if (!added) {
-                                validationResults.add(DuplicationViolation(key))
-                            }
-                            added
-                        }
+                        .map { (rate, _) -> translate(rate) }
+                        .filter(::checkDuplication)
                         .chunked(chunkSize)
-                        .forEach { dao.saveAll(it) }
+                        .forEach(dao::saveAll)
             }
         }
 
         private fun resolve(results: ValidationResults): Boolean {
-            validationResults.merge(results)
+            validationResults.add(RecordViolation(results))
             return !results.hasError
         }
 
-        private fun convert(obj: InterestRateCsvObject): InterestRate {
+        private fun translate(obj: InterestRateCsvObject): InterestRate {
             return InterestRate(
                     marketDataId = marketDataId,
                     indexName = obj.indexName,
                     currency = obj.currency,
                     term = obj.term,
                     rate = obj.rate)
+        }
+
+        private fun checkDuplication(rate: InterestRate): Boolean {
+            val key = rate.businessKey()
+            val added = importedBusinessKeys.add(key)
+            if (!added) {
+                validationResults.add(DuplicationViolation(key))
+            }
+            return added
         }
     }
 }

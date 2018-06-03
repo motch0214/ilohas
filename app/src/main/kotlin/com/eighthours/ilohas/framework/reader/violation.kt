@@ -4,8 +4,11 @@ import com.eighthours.ilohas.framework.validation.Violation
 import com.eighthours.ilohas.framework.validation.ViolationType
 
 
-abstract class CsvViolation(override val type: ViolationType, val header: String) : Violation
+abstract class CsvViolation(val header: String, val lineNumber: Long) : Violation {
 
-class MandatoryViolation(header: String) : CsvViolation(ViolationType.ERROR, header)
+    override val type = ViolationType.ERROR
+}
 
-class FormatViolation(header: String, val value: String) : CsvViolation(ViolationType.ERROR, header)
+class MandatoryViolation(header: String, lineNumber: Long) : CsvViolation(header, lineNumber)
+
+class FormatViolation(header: String, lineNumber: Long, val value: String) : CsvViolation(header, lineNumber)
