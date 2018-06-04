@@ -39,7 +39,7 @@ class InterestRateImporterFactory {
 
         val validationResults = ValidationResults()
 
-        private val importedBusinessKeys = mutableSetOf<MultiKey<*>>()
+        private val importedBusinessKeys = mutableSetOf<List<Any>>()
 
         fun import() {
             reader.read(targetFile) { rates ->

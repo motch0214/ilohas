@@ -5,5 +5,5 @@ import org.apache.commons.collections4.keyvalue.MultiKey
 
 interface MarketDataElement {
 
-    fun businessKey(): MultiKey<*>
+    fun businessKey(): List<Any>
 }

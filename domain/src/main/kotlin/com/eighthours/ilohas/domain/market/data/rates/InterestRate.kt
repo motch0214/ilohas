@@ -23,5 +23,5 @@ class InterestRate(
     @GeneratedValue
     val id: Long? = null
 
-    override fun businessKey() = MultiKey(indexName, currency, term)
+    override fun businessKey() = listOf(indexName, currency, term)
 }

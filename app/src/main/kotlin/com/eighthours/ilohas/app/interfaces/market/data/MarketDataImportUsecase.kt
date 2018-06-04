@@ -48,7 +48,7 @@ class MarketDataImportUsecase {
     private fun translate(v: Violation, path: String): List<SystemLog> {
         return when (v) {
             is RecordViolation -> v.delegate.violations.map { translateDetails(v, path) }
-            is DuplicationViolation -> listOf(SystemLog.warn("interface.duplication", path, v.businessKey.keys.toString()))
+            is DuplicationViolation -> listOf(SystemLog.warn("interface.duplication", path, v.businessKey.toString()))
             else -> throw IllegalArgumentException("unknown violation: $v")
         }
     }

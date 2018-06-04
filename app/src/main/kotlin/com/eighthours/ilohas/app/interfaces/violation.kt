@@ -11,7 +11,7 @@ class RecordViolation(val delegate: ValidationResults) : Violation {
     override val type = if (delegate.hasError) ViolationType.ERROR else ViolationType.WARN
 }
 
-class DuplicationViolation(val businessKey: MultiKey<*>) : Violation {
+class DuplicationViolation(val businessKey: List<Any>) : Violation {
 
     override val type = ViolationType.WARN
 }
