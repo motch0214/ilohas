@@ -1,9 +1,10 @@
 package com.eighthours.ilohas.app.interfaces.market.data.rates.csv
 
-import com.eighthours.ilohas.app.interfaces.converter.currency
-import com.eighthours.ilohas.app.interfaces.converter.term
+import com.eighthours.ilohas.app.interfaces.column.currency
+import com.eighthours.ilohas.app.interfaces.column.term
 import com.eighthours.ilohas.framework.reader.CsvColumns
-import com.eighthours.ilohas.framework.reader.double
+import com.eighthours.ilohas.framework.reader.column.double
+import com.eighthours.ilohas.framework.reader.column.mandatory
 
 
 object InterestRateCsvColumns : CsvColumns<InterestRateCsvObject>() {

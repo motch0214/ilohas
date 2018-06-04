@@ -8,7 +8,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 
-abstract class CsvReader<T> {
+abstract class CsvReader<T : CsvObject> {
 
     protected abstract val columns: CsvColumns<T>
 
@@ -26,8 +26,9 @@ abstract class CsvReader<T> {
     private fun convert(record: CSVRecord): Pair<T, ValidationResults> {
         val results = ValidationResults()
         val obj = createObj()
-        for (col in columns.columns) {
-            val violation = col.set(obj, record)
+        obj.lineNumber = record.recordNumber
+        for (col in columns.columnList) {
+            val violation = col.set(obj, record[col.header])
             violation?.let { results.add(it) }
         }
         return obj to results
