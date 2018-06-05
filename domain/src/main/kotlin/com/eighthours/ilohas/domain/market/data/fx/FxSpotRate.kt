@@ -19,5 +19,5 @@ class FxSpotRate(
     @GeneratedValue
     val id: Long? = null
 
-    override fun businessKey() = listOf(currencyPair)
+    override fun businessKey() = listOf(currencyPair.code)
 }

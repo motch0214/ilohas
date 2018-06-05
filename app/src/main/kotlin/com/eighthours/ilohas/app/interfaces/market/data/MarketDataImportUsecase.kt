@@ -1,20 +1,16 @@
 package com.eighthours.ilohas.app.interfaces.market.data
 
-import com.eighthours.ilohas.app.interfaces.DuplicationViolation
-import com.eighthours.ilohas.app.interfaces.RecordViolation
 import com.eighthours.ilohas.app.interfaces.market.data.rates.InterestRateImporterFactory
+import com.eighthours.ilohas.app.interfaces.market.data.rates.InterestRateImporterFactory.InterestRateImporter
 import com.eighthours.ilohas.domain.market.data.MarketData
 import com.eighthours.ilohas.domain.market.data.MarketDataRepository
-import com.eighthours.ilohas.domain.system.SystemLog
-import com.eighthours.ilohas.domain.system.SystemLogRepository
-import com.eighthours.ilohas.framework.reader.FormatViolation
-import com.eighthours.ilohas.framework.reader.MandatoryViolation
-import com.eighthours.ilohas.framework.validation.Violation
+import com.eighthours.ilohas.domain.system.*
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.nio.file.Path
 import java.time.LocalDate
+import java.time.ZonedDateTime
 import javax.inject.Inject
 
 
@@ -40,24 +36,32 @@ class MarketDataImportUsecase {
         val importer = interestRateImporterFactory.create(marketData.id!!, targetDirectory)
         importer.import()
 
-        val path = importer.targetFile.toString()
-        val logs = importer.validationResults.violations.flatMap { v -> translate(v, path) }
-        systemLogRepository.saveAll(logs)
+        val datetime = ZonedDateTime.now()
+        if (importer.validationResults.isNotEmpty) {
+            systemLogRepository.save(warningLog(importer, datetime))
+        }
+        systemLogRepository.save(importedLog(importer, datetime))
     }
 
-    private fun translate(v: Violation, path: String): List<SystemLog> {
-        return when (v) {
-            is RecordViolation -> v.delegate.violations.map { translateDetails(v, path) }
-            is DuplicationViolation -> listOf(SystemLog.warn("interface.duplication", path, v.businessKey.toString()))
-            else -> throw IllegalArgumentException("unknown violation: $v")
-        }
+    private fun warningLog(importer: InterestRateImporter, datetime: ZonedDateTime): SystemLog {
+        val details = importer.validationResults.violations
+                .map { it.toMessage() }
+                .map { SystemLogDetails(it) }
+        val summary = warningSummaryLogMessage(importer.targetFile.toFile().absolutePath,
+                "item.market.data.dataType.${importer.dataType}", "${importer.skippedCount}")
+        return SystemLog(SystemLogType.WARN, SystemLogCategory.INTERFACE, summary, details, datetime)
     }
 
-    private fun translateDetails(v: Violation, path: String): SystemLog {
-        return when (v) {
-            is MandatoryViolation -> SystemLog.warn("interface.mandatory", path, v.header)
-            is FormatViolation -> SystemLog.warn("interface.format", path, v.header, v.value)
-            else -> throw IllegalArgumentException("unknown violation: $v")
-        }
+    private fun importedLog(importer: InterestRateImporter, datetime: ZonedDateTime): SystemLog {
+        val message = importedLogMessage(importer.targetFile.toFile().absolutePath,
+                "item.market.data.dataType.${importer.dataType}", "${importer.importedCount}")
+        return SystemLog(SystemLogType.INFO, SystemLogCategory.INTERFACE, message, emptyList(), datetime)
     }
 }
+
+
+private fun warningSummaryLogMessage(file: String, dataTypeId: String, skippedCount: String) =
+        LogMessage("message.systemLog.interface.market.data.warning.summary", file, dataTypeId, skippedCount)
+
+private fun importedLogMessage(file: String, dataTypeId: String, importedCount: String) =
+        LogMessage("message.systemLog.interface.market.data.imported", file, dataTypeId, importedCount)

@@ -1,8 +1,11 @@
 package com.eighthours.ilohas.framework.validation
 
+import com.eighthours.ilohas.domain.system.LogMessage
+
 
 interface Violation {
     val type: ViolationType
+    fun toMessage(): LogMessage
 }
 
 
@@ -19,6 +22,8 @@ class ValidationResults {
 
     var hasError = false
         private set
+
+    val isNotEmpty: Boolean get() = violations.isNotEmpty()
 
     fun add(violation: Violation) {
         mutableViolations.add(violation)

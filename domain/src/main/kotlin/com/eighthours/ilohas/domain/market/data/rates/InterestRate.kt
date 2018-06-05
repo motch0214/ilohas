@@ -4,7 +4,6 @@ import com.eighthours.ilohas.domain.market.Currency
 import com.eighthours.ilohas.domain.market.Term
 import com.eighthours.ilohas.domain.market.data.MarketDataElement
 import com.eighthours.ilohas.domain.market.data.MarketDataId
-import org.apache.commons.collections4.keyvalue.MultiKey
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -23,5 +22,5 @@ class InterestRate(
     @GeneratedValue
     val id: Long? = null
 
-    override fun businessKey() = listOf(indexName, currency, term)
+    override fun businessKey() = listOf(indexName, currency.code, term.code)
 }

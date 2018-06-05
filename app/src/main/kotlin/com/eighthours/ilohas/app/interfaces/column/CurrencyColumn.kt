@@ -7,6 +7,6 @@ import com.eighthours.ilohas.framework.reader.column.MandatoryStringColumnBuilde
 import com.eighthours.ilohas.framework.reader.column.builder
 
 
-fun <T : CsvObject> MandatoryStringColumnBuilder<T>.currency() = builder<T, String, Currency> { obj, s ->
+fun <T : CsvObject> MandatoryStringColumnBuilder<T>.currency() = builder<T, String, Currency> { _, s ->
     ok(Currency.of(s))
 }

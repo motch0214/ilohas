@@ -1,17 +1,13 @@
 package com.eighthours.ilohas.app.interfaces
 
-import com.eighthours.ilohas.framework.validation.ValidationResults
+import com.eighthours.ilohas.domain.system.LogMessage
 import com.eighthours.ilohas.framework.validation.Violation
 import com.eighthours.ilohas.framework.validation.ViolationType
-import org.apache.commons.collections4.keyvalue.MultiKey
 
 
-class RecordViolation(val delegate: ValidationResults) : Violation {
+class DuplicationViolation(val businessKey: List<String>) : Violation {
 
-    override val type = if (delegate.hasError) ViolationType.ERROR else ViolationType.WARN
-}
+    override val type = ViolationType.ERROR
 
-class DuplicationViolation(val businessKey: List<Any>) : Violation {
-
-    override val type = ViolationType.WARN
+    override fun toMessage() = LogMessage("violation.duplication", "[${businessKey.joinToString(", ")}]")
 }

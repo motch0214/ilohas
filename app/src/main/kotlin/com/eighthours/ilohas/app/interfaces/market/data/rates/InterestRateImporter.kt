@@ -2,12 +2,11 @@ package com.eighthours.ilohas.app.interfaces.market.data.rates
 
 import com.eighthours.ilohas.app.interfaces.DuplicationViolation
 import com.eighthours.ilohas.app.interfaces.InterfaceReader
-import com.eighthours.ilohas.app.interfaces.RecordViolation
 import com.eighthours.ilohas.app.interfaces.market.data.rates.csv.InterestRateCsvObject
 import com.eighthours.ilohas.domain.market.data.MarketDataId
 import com.eighthours.ilohas.domain.market.data.rates.InterestRate
 import com.eighthours.ilohas.framework.validation.ValidationResults
-import org.apache.commons.collections4.keyvalue.MultiKey
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.nio.file.Path
@@ -16,6 +15,10 @@ import javax.inject.Inject
 
 @Component
 class InterestRateImporterFactory {
+
+    companion object {
+        private val log = LoggerFactory.getLogger(this::class.java.enclosingClass)
+    }
 
     @Value("\${ilohas.import.market.interestRate.fileName}")
     private lateinit var fileName: String
@@ -35,13 +38,21 @@ class InterestRateImporterFactory {
             private val marketDataId: MarketDataId,
             targetDirectory: Path) {
 
-        val targetFile = targetDirectory.resolve(fileName)
+        val dataType = "InterestRate"
+
+        val targetFile: Path = targetDirectory.resolve(fileName)
 
         val validationResults = ValidationResults()
 
-        private val importedBusinessKeys = mutableSetOf<List<Any>>()
+        private val importedBusinessKeys = mutableSetOf<List<String>>()
+
+        val importedCount: Int get() = importedBusinessKeys.size
+
+        var skippedCount: Int = 0
+            private set
 
         fun import() {
+            log.debug("Import starts.")
             reader.read(targetFile) { rates ->
                 rates.filter { (_, results) -> resolve(results) }
                         .map { (rate, _) -> translate(rate) }
@@ -49,11 +60,17 @@ class InterestRateImporterFactory {
                         .chunked(chunkSize)
                         .forEach(dao::saveAll)
             }
+            log.debug("Import finishes.")
         }
 
         private fun resolve(results: ValidationResults): Boolean {
-            validationResults.add(RecordViolation(results))
-            return !results.hasError
+            validationResults.merge(results)
+            return if (results.hasError) {
+                skippedCount++
+                false
+            } else {
+                true
+            }
         }
 
         private fun translate(obj: InterestRateCsvObject): InterestRate {
@@ -70,6 +87,7 @@ class InterestRateImporterFactory {
             val added = importedBusinessKeys.add(key)
             if (!added) {
                 validationResults.add(DuplicationViolation(key))
+                skippedCount++
             }
             return added
         }
