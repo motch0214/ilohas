@@ -1,7 +1,7 @@
 <template lang="pug">
 doctype html
 #login
-  el-card.login-card
+  el-card
     .login-header(slot="header")
       .header-title ilohas
     el-form(@submit.native.prevent)
@@ -10,7 +10,7 @@ doctype html
       el-form-item(size="medium")
         el-input(v-model="password" type="password" placeholder="Password")
       el-form-item
-        el-button.login-button(type="primary" native-type="submit" @click="login") Login
+        el-button.login-button(type="info" native-type="submit" @click="login") Login
 </template>
 
 <script>
@@ -53,16 +53,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-card {
+#login {
+  padding-top: 30px;
+}
+
+.el-card {
   margin: 0 auto;
-  margin-top: 30px;
   max-width: 400px;
 }
+
 .header-title {
   text-align: center;
   font-size: 2em;
   font-weight: bold;
 }
+
 .login-button {
   width: 100%;
 }

@@ -28,6 +28,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../styles/colors';
+
 #layout,
 section {
   height: 100%;
@@ -36,10 +38,10 @@ section {
 .el-header {
   padding: 10px 20px;
   color: white;
-  background-color: #261044fd;
+  background-color: $primary-color;
 
   h1 {
-    margin: 0;
+    margin: 8px 0;
   }
 }
 

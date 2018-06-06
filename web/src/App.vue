@@ -10,8 +10,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import './styles/colors';
-
 html,
 body,
 #app {
@@ -22,6 +20,5 @@ body,
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: $default-text-color;
 }
 </style>
