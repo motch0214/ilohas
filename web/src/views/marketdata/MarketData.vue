@@ -1,5 +1,5 @@
 <template lang="pug">
-.market-data
+#market-data
   h1 MarketData
 </template>
 
@@ -13,4 +13,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#market-data {
+  padding: 0 20px;
+}
 </style>

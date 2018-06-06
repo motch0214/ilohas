@@ -1,8 +1,8 @@
 <template lang="pug">
 #menu
-  el-menu
-    el-menu-item(index="1") Welcome
-    el-menu-item(index="2") Market Data
+  el-menu(router=true, :default-active="this.$route.path")
+    el-menu-item(index="/hello", :router="this.$router") Welcome
+    el-menu-item(index="/market", :router="this.$router") Market data
 </template>
 
 <script>
@@ -18,5 +18,9 @@ export default {
 #menu,
 .el-menu {
   height: 100%;
+}
+
+.is-active {
+  font-weight: bold;
 }
 </style>
