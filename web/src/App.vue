@@ -1,5 +1,5 @@
 <template lang="pug">
-#app
+#app.match-height
   router-view
 </template>
 
@@ -13,7 +13,7 @@ export default {
 html,
 body,
 section,
-#app {
+.match-height {
   height: 100%;
 }
 
@@ -21,5 +21,11 @@ section,
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.main-header > h1 {
+  margin: 0;
+  padding: 10px 0;
+  font-size: 1.5em;
 }
 </style>

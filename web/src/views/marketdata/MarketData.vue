@@ -1,9 +1,9 @@
 <template lang="pug">
 doctype html
-#market-data
+#market-data.match-height
   el-container
-    el-header(height="auto")
-      h2 Market Data
+    el-header(height="auto").main-header
+      h1 Market Data
     el-table(:data="marketDataList" stripe height="100%" style="width: 100%")
       el-table-column(type="selection")
       el-table-column(prop="baseDate" label="Base Date" sortable width="120")
@@ -96,12 +96,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#market-data {
-  height: 100%;
-}
-
-h2 {
-  margin: 0;
-  padding: 10px 0;
-}
 </style>

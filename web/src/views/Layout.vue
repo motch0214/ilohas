@@ -1,5 +1,5 @@
 <template lang="pug">
-#layout
+#layout.match-height
   el-container
     el-header.title-header(height="auto")
       h1 ilohas
@@ -11,7 +11,7 @@
           el-breadcrumb(separator-class="el-icon-arrow-right")
             el-breadcrumb-item(v-for="item in this.$route.meta.breadcrumbs")
               span {{ item.title }}
-        el-main
+        el-main.match-height
           router-view
         el-footer(height="auto")
           .copyright Copyright © 2018 eighthours All Rights Reserved.
@@ -33,11 +33,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/colors';
-
-#layout,
-.el-main {
-  height: 100%;
-}
 
 .title-header {
   padding: 10px 20px;

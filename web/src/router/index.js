@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Login from '../views/Login';
 import Layout from '../views/Layout';
+import Login from '../views/login/Login';
 import HelloWorld from '../views/HelloWorld';
 import MarketData from '../views/marketdata/MarketData';
+import SystemLog from '../views/system/SystemLog';
 
 Vue.use(Router);
 
@@ -38,6 +39,17 @@ const router = new Router({
             breadcrumbs: [
               { title: 'Data Management' },
               { title: 'Market Data' },
+            ],
+          },
+        },
+        {
+          path: 'system/log',
+          name: 'SystemLog',
+          component: SystemLog,
+          meta: {
+            breadcrumbs: [
+              { title: 'System Management' },
+              { title: 'System Log' },
             ],
           },
         },

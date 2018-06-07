@@ -1,9 +1,11 @@
 <template lang="pug">
 #menu
-  el-menu(router=true, :default-active="this.$route.path")
-    el-menu-item(index="/hello", :router="this.$router") Welcome
+  el-menu(router=true :default-active="this.$route.path")
+    el-menu-item(index="/hello" :router="this.$router") Welcome
     el-menu-item-group(title="Data Management")
-      el-menu-item(index="/market", :router="this.$router") Market Data
+      el-menu-item(index="/market" :router="this.$router") Market Data
+    el-menu-item-group(title="System Management")
+      el-menu-item(index="/system/log" :router="this.$router") System Log
 </template>
 
 <script>
