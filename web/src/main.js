@@ -5,7 +5,9 @@ import Element from 'element-ui';
 import './styles/theme/index.css';
 import 'normalize.css';
 
-Vue.use(Element);
+import locale from 'element-ui/lib/locale/lang/en';
+
+Vue.use(Element, { locale });
 
 /* eslint-disable no-new */
 new Vue({

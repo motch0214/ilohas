@@ -12,6 +12,7 @@ export default {
 <style lang="scss">
 html,
 body,
+section,
 #app {
   height: 100%;
 }

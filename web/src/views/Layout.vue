@@ -35,7 +35,7 @@ export default {
 @import '../styles/colors';
 
 #layout,
-section {
+.el-main {
   height: 100%;
 }
 
