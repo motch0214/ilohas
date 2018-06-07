@@ -34,6 +34,12 @@ const router = new Router({
           path: 'market',
           name: 'MarketData',
           component: MarketData,
+          meta: {
+            breadcrumbs: [
+              { title: 'Data Management' },
+              { title: 'Market Data' },
+            ],
+          },
         },
       ],
     },

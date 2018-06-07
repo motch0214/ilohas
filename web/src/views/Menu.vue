@@ -2,7 +2,8 @@
 #menu
   el-menu(router=true, :default-active="this.$route.path")
     el-menu-item(index="/hello", :router="this.$router") Welcome
-    el-menu-item(index="/market", :router="this.$router") Market data
+    el-menu-item-group(title="Data Management")
+      el-menu-item(index="/market", :router="this.$router") Market Data
 </template>
 
 <script>
