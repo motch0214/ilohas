@@ -41,6 +41,7 @@ dependencies {
     compile project(':adapter')
 
     // Spring Test
+    testRuntimeClasspath files('config/local')
     testCompile group: 'org.springframework.boot', name: 'spring-boot-test', version: '2.0.1.RELEASE'
     testCompile group: 'org.springframework', name: 'spring-test', version: '5.0.5.RELEASE'
 
