@@ -3,12 +3,12 @@ package com.eighthours.ilohas.framework.reader
 import com.eighthours.ilohas.domain.system.LogMessage
 import com.eighthours.ilohas.framework.reader.column.BoundaryType
 import com.eighthours.ilohas.framework.validation.Violation
-import com.eighthours.ilohas.framework.validation.ViolationType
+import com.eighthours.ilohas.framework.validation.ViolationLevel
 
 
 abstract class CsvViolation(val header: String, val lineNumber: Long) : Violation {
 
-    override val type = ViolationType.ERROR
+    override val level = ViolationLevel.ERROR
 }
 
 class MandatoryViolation(header: String, lineNumber: Long) : CsvViolation(header, lineNumber) {

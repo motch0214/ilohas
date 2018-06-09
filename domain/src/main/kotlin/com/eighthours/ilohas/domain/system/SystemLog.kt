@@ -8,7 +8,7 @@ import javax.persistence.*
 class SystemLog(
         @Column(nullable = false)
         @Enumerated(EnumType.STRING)
-        val type: SystemLogType,
+        val level: SystemLogLevel,
 
         @Column(nullable = false)
         @Enumerated(EnumType.STRING)
@@ -17,7 +17,7 @@ class SystemLog(
         @Embedded
         val message: LogMessage,
 
-        @OneToMany
+        @OneToMany(cascade = [CascadeType.ALL])
         @JoinColumn(name = "systemLogId")
         val details: List<SystemLogDetails>,
 
@@ -29,7 +29,7 @@ class SystemLog(
 }
 
 
-enum class SystemLogType {
+enum class SystemLogLevel {
     ERROR, WARN, INFO
 }
 

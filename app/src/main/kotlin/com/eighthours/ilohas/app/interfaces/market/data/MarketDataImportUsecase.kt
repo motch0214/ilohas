@@ -49,13 +49,13 @@ class MarketDataImportUsecase {
                 .map { SystemLogDetails(it) }
         val summary = warningSummaryLogMessage(importer.targetFile.toFile().absolutePath,
                 "item.market.data.dataType.${importer.dataType}", "${importer.skippedCount}")
-        return SystemLog(SystemLogType.WARN, SystemLogCategory.INTERFACE, summary, details, datetime)
+        return SystemLog(SystemLogLevel.WARN, SystemLogCategory.INTERFACE, summary, details, datetime)
     }
 
     private fun importedLog(importer: InterestRateImporter, datetime: ZonedDateTime): SystemLog {
         val message = importedLogMessage(importer.targetFile.toFile().absolutePath,
                 "item.market.data.dataType.${importer.dataType}", "${importer.importedCount}")
-        return SystemLog(SystemLogType.INFO, SystemLogCategory.INTERFACE, message, emptyList(), datetime)
+        return SystemLog(SystemLogLevel.INFO, SystemLogCategory.INTERFACE, message, emptyList(), datetime)
     }
 }
 

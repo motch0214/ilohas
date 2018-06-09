@@ -4,12 +4,12 @@ import com.eighthours.ilohas.domain.system.LogMessage
 
 
 interface Violation {
-    val type: ViolationType
+    val level: ViolationLevel
     fun toMessage(): LogMessage
 }
 
 
-enum class ViolationType {
+enum class ViolationLevel {
     ERROR, WARN
 }
 
@@ -27,7 +27,7 @@ class ValidationResults {
 
     fun add(violation: Violation) {
         mutableViolations.add(violation)
-        if (violation.type == ViolationType.ERROR) {
+        if (violation.level == ViolationLevel.ERROR) {
             hasError = true
         }
     }
